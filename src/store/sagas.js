@@ -7,10 +7,12 @@ function* watchAuth() {
   yield takeEvery(AUTH_CHECK, function* ({ creds }) {
     const { person, username, password } = creds;
     const auth = person?.name === username && person?.birth_year === password;
+    const error = !auth ? 'Username or password is incorrect' : null;
     yield put(setLoading(true));
-    yield delay(500);
+    yield delay(1000);
     yield put(setAuth(auth));
     yield put(setLoading(false));
+    yield put(setError(error));
   });
 }
 
