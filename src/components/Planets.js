@@ -6,6 +6,7 @@ import { getPlanets, setAuth } from '../store/actions';
 
 function Planets() {
   const dispatch = useDispatch();
+  const person = useSelector((state) => state.people);
   const planets = useSelector((state) => state.planets);
   const [searchTerm, setSearchTerm] = useState('');
   const debouncedSearchTerm = useDebounce(searchTerm, 200);
@@ -20,6 +21,7 @@ function Planets() {
 
   return (
     <div className='container mx-auto py-4'>
+      <h3 className='text-center'>{person?.name}</h3>
       <div className='px-4 sm:px-6 lg:px-4 xl:px-6 pt-4 pb-4 sm:pb-6 lg:pb-4 xl:pb-6 space-y-4'>
         <header className='flex items-center justify-between'>
           <h2 className='text-lg leading-6 font-medium text-black'>Planets</h2>

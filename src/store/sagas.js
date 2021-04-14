@@ -21,7 +21,8 @@ function* watchPeople() {
     yield put(setLoading(true));
     try {
       const res = yield apiRequest(`/people/?search=${name}`);
-      yield put(setPeople(res.data.results[0]));
+      const character = res.data.results.find((n) => n.name === name);
+      yield put(setPeople(character));
     } catch (error) {
       console.error(error);
       yield put(setError(error));
