@@ -1,4 +1,16 @@
+import _ from 'lodash';
+
 function Planet({ planets }) {
+  const max = Number(
+    _.maxBy(planets, ({ population }) => (population === 'unknown' ? 0 : Number(population)))
+      ?.population
+  );
+  const average = max / 2;
+  const range = 0 - max;
+  const relative = (range / average) * 100;
+  const result = Math.abs(relative);
+  console.log(result);
+
   return (
     <ul>
       {planets
