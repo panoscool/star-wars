@@ -1,24 +1,16 @@
 import { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import useDebounce from '../useDebounce';
-import apiRequest from '../api';
+import { getPeople, checkAuth } from '../store/actions';
 
-function Login({ setAuth }) {
-  const [people, setPeople] = useState([]);
+function Login() {
+  const dispatch = useDispatch();
   const [state, setState] = useState({ username: '', password: '' });
   const debouncedSearchTerm = useDebounce(state.username, 200);
 
   useEffect(() => {
-    const fetchPeople = async () => {
-      try {
-        const res = await apiRequest(`/people/?search=${debouncedSearchTerm}`);
-        setPeople(res.data.results);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    fetchPeople();
-  }, [debouncedSearchTerm]);
+    dispatch(getPeople(debouncedSearchTerm));
+  }, [debouncedSearchTerm, dispatch]);
 
   function handleChange(e) {
     setState({ ...state, [e.target.name]: e.target.value });
@@ -26,11 +18,8 @@ function Login({ setAuth }) {
 
   function handleSubmit(e) {
     e.preventDefault();
-    const checkName = people[0]?.name === state.username;
-    const checkAge = people[0]?.birth_year === state.password;
-    if (checkName && checkAge) {
-      setAuth(true);
-    }
+    const { username, password } = state;
+    dispatch(checkAuth({ username, password }));
   }
 
   return (
