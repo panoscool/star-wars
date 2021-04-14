@@ -1,18 +1,27 @@
 import { all, fork, put, delay, takeEvery } from 'redux-saga/effects';
-import { PEOPLE_GET, PLANETS_GET, AUTH_CHECK } from './actionTypes';
+import { PEOPLE_GET, PLANETS_GET, LOGIN, LOGOUT } from './actionTypes';
 import { setPeople, setPlanets, setLoading, setError, setAuth } from './actions';
 import apiRequest from '../api';
+import history from '../history';
 
 function* watchAuth() {
-  yield takeEvery(AUTH_CHECK, function* ({ creds }) {
+  yield takeEvery(LOGIN, function* ({ creds }) {
     const { person, username, password } = creds;
     const auth = person?.name === username && person?.birth_year === password;
     const error = !auth ? 'Username or password is incorrect' : null;
+    yield localStorage.setItem('auth', auth);
     yield put(setLoading(true));
     yield delay(1000);
     yield put(setAuth(auth));
     yield put(setLoading(false));
+    yield history.push('/planets');
     yield put(setError(error));
+  });
+
+  yield takeEvery(LOGOUT, function* () {
+    yield localStorage.removeItem('auth');
+    yield put(setAuth(false));
+    yield history.push('/');
   });
 }
 

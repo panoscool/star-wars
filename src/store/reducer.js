@@ -1,7 +1,7 @@
 import { PEOPLE_SET, PLANETS_SET, LOADING_SET, ERROR_SET, AUTH_SET } from './actionTypes';
 
 const initState = {
-  auth: false,
+  isAuth: localStorage.getItem('auth') || false,
   loading: false,
   error: null,
   people: [],

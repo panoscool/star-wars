@@ -8,4 +8,5 @@ export const LOADING_SET = 'LOADING_SET';
 export const ERROR_SET = 'ERROR_SET';
 
 export const AUTH_SET = 'AUTH_SET';
-export const AUTH_CHECK = 'AUTH_CHECK';
+export const LOGIN = 'LOGIN';
+export const LOGOUT = 'LOGOUT';

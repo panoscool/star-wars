@@ -5,7 +5,8 @@ import {
   PLANETS_SET,
   LOADING_SET,
   ERROR_SET,
-  AUTH_CHECK,
+  LOGIN,
+  LOGOUT,
   AUTH_SET,
 } from './actionTypes';
 import store from './configureStore';
@@ -17,10 +18,16 @@ export const setAuth = (state) => {
   };
 };
 
-export const checkAuth = ({ username, password }) => {
+export const logout = () => {
+  return {
+    type: LOGOUT,
+  };
+};
+
+export const login = ({ username, password }) => {
   const person = store.getState().people;
   return {
-    type: AUTH_CHECK,
+    type: LOGIN,
     creds: { person, username, password },
   };
 };

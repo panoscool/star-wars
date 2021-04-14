@@ -1,12 +1,18 @@
-import { useSelector } from 'react-redux';
+import { Route, Switch } from 'react-router-dom';
 import Login from './components/Login';
 import Planets from './components/Planets';
-import { setAuth } from './store/actions';
 
 function App() {
-  const auth = useSelector((state) => state.auth);
-
-  return <div>{auth ? <Planets /> : <Login setAuth={setAuth} />}</div>;
+  return (
+    <Switch>
+      <Route exact path='/'>
+        <Login />
+      </Route>
+      <Route path='/planets'>
+        <Planets />
+      </Route>
+    </Switch>
+  );
 }
 
 export default App;

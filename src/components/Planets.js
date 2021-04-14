@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Planet from './Planet';
 import useDebounce from '../useDebounce';
-import { getPlanets, setAuth } from '../store/actions';
+import { getPlanets, logout } from '../store/actions';
 
 function Planets() {
   const dispatch = useDispatch();
@@ -16,7 +16,7 @@ function Planets() {
   }, [debouncedSearchTerm, dispatch]);
 
   function handleAuth() {
-    dispatch(setAuth(false));
+    dispatch(logout());
   }
 
   return (

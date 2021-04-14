@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import useDebounce from '../useDebounce';
-import { getPeople, checkAuth } from '../store/actions';
+import { getPeople, login } from '../store/actions';
 
 function Login() {
   const dispatch = useDispatch();
+  const error = useSelector((state) => state.error);
   const [state, setState] = useState({ username: '', password: '' });
   const debouncedSearchTerm = useDebounce(state.username, 200);
 
@@ -19,13 +20,14 @@ function Login() {
   function handleSubmit(e) {
     e.preventDefault();
     const { username, password } = state;
-    dispatch(checkAuth({ username, password }));
+    dispatch(login({ username, password }));
   }
 
   return (
     <div className='login'>
       <header className='header'>
         <img src='/logo.png' alt='star wars' className='logo' />
+        {error && <div className='text-red-500 text-sm mb-3'>{error}</div>}
         <form
           autoComplete='off'
           onSubmit={handleSubmit}
